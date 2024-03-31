@@ -1,5 +1,6 @@
 package com.quiz.sales_management_system.model;
 
+import com.quiz.sales_management_system.dto.AddProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,4 +32,12 @@ public class Products {
     private Timestamp createdAt;
     @Column(name = "updated_at")
     private Timestamp updatedAt;
+
+    public Products(AddProductDTO addProductDTO) {
+        this.name = addProductDTO.getName();
+        this.description = addProductDTO.getDescription();
+        this.availableQuantity = addProductDTO.getQuantity();
+        this.price = addProductDTO.getPrice();
+        this.category = addProductDTO.getCategory();
+    }
 }
