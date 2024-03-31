@@ -34,4 +34,9 @@ public class ProductsController {
         return productsService.updateProduct(productId,updateProductDTO);
     }
 
+    @DeleteMapping("{productId}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Integer productId) {
+        return productsService.deleteProduct(productId);
+    }
+
 }

@@ -21,7 +21,7 @@ public class ProductsService {
     @Autowired
     ProductsRepository productsRepository;
 
-    public ResponseEntity<?> findAllProducts(){
+    public ResponseEntity<?> findAllProducts() {
         ReturnObject returnObject = new ReturnObject();
         try {
             List<Products> productsList = productsRepository.findAll();
@@ -36,15 +36,15 @@ public class ProductsService {
                 returnObject.setStatus(true);
                 return ResponseEntity.status(HttpStatus.OK).body(returnObject);
             }
-        }catch (Exception exception){
+        } catch (Exception exception) {
             returnObject.setData(null);
             returnObject.setMessage("Failed To Load Data");
             returnObject.setStatus(true);
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(returnObject);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(returnObject);
         }
     }
 
-    public ResponseEntity findAllProductsPaging(int page,int size){
+    public ResponseEntity findAllProductsPaging(int page, int size) {
         ReturnObject returnObject = new ReturnObject();
         try {
             Page<Products> productsPage = productsRepository.findAllProducts(PageRequest.of(page, size));
@@ -76,18 +76,19 @@ public class ProductsService {
             returnObject.setData(addProductDTO);
             returnObject.setMessage("Added Product Successfully");
             return ResponseEntity.status(HttpStatus.OK).body(returnObject);
-        }catch (Exception exception){
+        } catch (Exception exception) {
             returnObject.setData(null);
             returnObject.setMessage("Failed to add Product");
             returnObject.setStatus(false);
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(returnObject);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(returnObject);
         }
     }
-    public ResponseEntity<?> updateProduct(Integer id , UpdateProductDTO updateProductDTO) {
+
+    public ResponseEntity<?> updateProduct(Integer id, UpdateProductDTO updateProductDTO) {
         ReturnObject returnObject = new ReturnObject();
         try {
             Optional<Products> productOptional = productsRepository.findById(id);
-            if(productOptional.isPresent()) {
+            if (productOptional.isPresent()) {
 
                 Products product = productOptional.get();
                 product.setName(updateProductDTO.getName());
@@ -100,17 +101,31 @@ public class ProductsService {
                 returnObject.setData(updateProductDTO);
                 returnObject.setMessage("Updated Product Successfully");
                 return ResponseEntity.status(HttpStatus.OK).body(returnObject);
-            }else{
+            } else {
                 returnObject.setStatus(false);
                 returnObject.setData(null);
                 returnObject.setMessage("Product Not Found");
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(returnObject);
             }
-        }catch (Exception exception){
+        } catch (Exception exception) {
             returnObject.setData(null);
             returnObject.setMessage("Failed to add Product");
             returnObject.setStatus(false);
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(returnObject);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(returnObject);
+        }
+    }
+
+    public ResponseEntity deleteProduct(int id) {
+        ReturnObject returnObject = new ReturnObject();
+        try {
+            productsRepository.deleteById(id);
+            returnObject.setMessage("Product deleted successfully");
+            returnObject.setStatus(true);
+            return ResponseEntity.status(HttpStatus.OK).body(returnObject);
+        } catch (Exception exception) {
+            returnObject.setMessage("Failed to delete product");
+            returnObject.setStatus(false);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(returnObject);
         }
     }
 }
