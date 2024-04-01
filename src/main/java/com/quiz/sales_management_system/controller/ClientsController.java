@@ -35,4 +35,9 @@ public class ClientsController {
         return clientsService.updateClient(clientId,updateClient);
     }
 
+    @DeleteMapping("{clientId}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Integer clientId) {
+        return clientsService.deleteClient(clientId);
+    }
+
 }

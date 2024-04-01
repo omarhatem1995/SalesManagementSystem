@@ -159,4 +159,18 @@ public class ClientsService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(returnObject);
         }
     }
+
+    public ResponseEntity deleteClient(int id) {
+        ReturnObject returnObject = new ReturnObject();
+        try {
+            clientsRepository.deleteById(id);
+            returnObject.setMessage("Client deleted successfully");
+            returnObject.setStatus(true);
+            return ResponseEntity.status(HttpStatus.OK).body(returnObject);
+        } catch (Exception exception) {
+            returnObject.setMessage("Failed to delete client");
+            returnObject.setStatus(false);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(returnObject);
+        }
+    }
 }
