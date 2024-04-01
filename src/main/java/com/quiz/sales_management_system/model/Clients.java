@@ -1,12 +1,12 @@
 package com.quiz.sales_management_system.model;
 
+import com.quiz.sales_management_system.dto.clients.AddClientsDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 @Entity
 @AllArgsConstructor
@@ -31,4 +31,12 @@ public class Clients {
     private Timestamp createdAt;
     @Column(name = "updated_at")
     private Timestamp updatedAt;
+
+    public Clients(AddClientsDTO addClientDTO) {
+        this.firstName = addClientDTO.getFirstName();
+        this.lastName = addClientDTO.getLastName();
+        this.mobile = addClientDTO.getMobile();
+        this.address = addClientDTO.getAddress();
+        this.mail = addClientDTO.getEmail();
+    }
 }

@@ -1,13 +1,12 @@
 package com.quiz.sales_management_system.model;
 
-import com.quiz.sales_management_system.dto.AddProductDTO;
+import com.quiz.sales_management_system.dto.products.AddProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 @Entity
 @AllArgsConstructor

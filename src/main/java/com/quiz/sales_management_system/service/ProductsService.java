@@ -1,7 +1,7 @@
 package com.quiz.sales_management_system.service;
 
-import com.quiz.sales_management_system.dto.AddProductDTO;
-import com.quiz.sales_management_system.dto.UpdateProductDTO;
+import com.quiz.sales_management_system.dto.products.AddProductDTO;
+import com.quiz.sales_management_system.dto.products.UpdateProductDTO;
 import com.quiz.sales_management_system.model.Products;
 import com.quiz.sales_management_system.repo.ProductsRepository;
 import com.quiz.sales_management_system.utils.ReturnObject;
@@ -105,7 +105,7 @@ public class ProductsService {
                 returnObject.setStatus(false);
                 returnObject.setData(null);
                 returnObject.setMessage("Product Not Found");
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(returnObject);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(returnObject);
             }
         } catch (Exception exception) {
             returnObject.setData(null);

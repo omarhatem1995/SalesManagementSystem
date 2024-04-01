@@ -1,4 +1,4 @@
-package com.quiz.sales_management_system.dto;
+package com.quiz.sales_management_system.dto.products;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddProductDTO {
-
+public class UpdateProductDTO {
     String name;
     String description;
     String category;

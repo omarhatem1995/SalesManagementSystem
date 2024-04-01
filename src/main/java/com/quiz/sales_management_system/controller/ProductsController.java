@@ -1,7 +1,7 @@
 package com.quiz.sales_management_system.controller;
 
-import com.quiz.sales_management_system.dto.AddProductDTO;
-import com.quiz.sales_management_system.dto.UpdateProductDTO;
+import com.quiz.sales_management_system.dto.products.AddProductDTO;
+import com.quiz.sales_management_system.dto.products.UpdateProductDTO;
 import com.quiz.sales_management_system.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
