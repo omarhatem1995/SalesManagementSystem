@@ -20,6 +20,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static com.quiz.sales_management_system.utils.TransactionsConstants.NEW_ORDER;
+import static com.quiz.sales_management_system.utils.TransactionsConstants.UPDATE_ORDER;
+
 @Service
 public class SalesService {
 
@@ -32,6 +35,8 @@ public class SalesService {
     private UserRepository userRepository;
     @Autowired
     private ClientsRepository clientsRepository;
+    @Autowired
+    private ClientLogsRepository clientLogsRepository;
     @Autowired
     private ProductsRepository productsRepository;
 
@@ -113,6 +118,7 @@ public class SalesService {
 
                     if (!saleSaved) {
                         sale = salesRepository.save(sale);
+                        createTransactionRecord(sale, NEW_ORDER);
                         saleSaved = true; // Set the flag to true after saving the sale
                     }
 
@@ -153,6 +159,7 @@ public class SalesService {
         }
 
     }
+
 
     public ResponseEntity<?> updateSales(Integer id , UpdateSalesDTO updateSalesDTO){
         ReturnObject returnObject = new ReturnObject();
@@ -212,6 +219,7 @@ public class SalesService {
                     saleDetails.setQuantity(updatedQuantity);
                     salesTotalPrice += (product.getPrice() * updatedQuantity);
                     saleDetailsRepository.save(saleDetails);
+                    createTransactionRecord(sale, UPDATE_ORDER);
                 } else {
                     returnObject.setStatus(false);
                     returnObject.setData(null);
@@ -229,6 +237,13 @@ public class SalesService {
             returnObject.setStatus(true);
             return ResponseEntity.status(HttpStatus.OK).body(returnObject);
 
-
     }
+
+    private void createTransactionRecord(Sales sale , Integer transactionType) {
+        ClientLogs clientLogs = new ClientLogs();
+        clientLogs.setClientId(sale.getClientId());
+        clientLogs.setTransactionType(transactionType);
+        clientLogsRepository.save(clientLogs);
+    }
+
 }
